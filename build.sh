@@ -37,9 +37,9 @@ BOLDBLUE="\e[1;96m"
 ENDCOLOR="\e[0m"
 
 if [ -f "$KDIR/$OUT_DIR/.config" ]; then
-    CONFIG_STATUS="${BOLDGREEN}Config present${ENDCOLOR}"
+    CONFIG_STATUS="$BOLDGREEN}Config present$ENDCOLOR"
 else
-    CONFIG_STATUS="${BOLDRED}No .config found${ENDCOLOR}"
+    CONFIG_STATUS="${BOLDRED}No .config found$ENDCOLOR"
 fi
 
 function show_gui() {
@@ -47,33 +47,33 @@ function show_gui() {
 	echo -e "\e[1;93m"
 	figlet Kernel Builder
 	echo -e "\e[0m"
-	echo -e "${BOLDGREEN}Creator: ${BOLDRED}karamdev1${ENDCOLOR}"
-	echo -e "${BOLDGREEN}Kernel Config: ${CONFIG_STATUS}${ENDCOLOR}"
+	echo -e "${BOLDGREEN}Creator: ${BOLDRED}karamdev1$ENDCOLOR"
+	echo -e "${BOLDGREEN}Kernel Config: ${CONFIG_STATUS}$ENDCOLOR"
 	echo
-	echo -e "${BOLDGREEN}|-------------------${ENDCOLOR}Kernel${BOLDGREEN}----------------------------|${ENDCOLOR}"
-	echo -e "${BOLDGREEN}|        ${ENDCOLOR}[${BOLDBLUE}1${ENDCOLOR}] Compile Kernel                           ${BOLDGREEN}|${ENDCOLOR}"
-	echo -e "${BOLDGREEN}|        ${ENDCOLOR}[${BOLDBLUE}2${ENDCOLOR}] Compile Module (Doesn't need prepare)    ${BOLDGREEN}|${ENDCOLOR}"
-	echo -e "${BOLDGREEN}|        ${ENDCOLOR}[${BOLDBLUE}3${ENDCOLOR}] Prepare Module                           ${BOLDGREEN}|${ENDCOLOR}"
-	echo -e "${BOLDGREEN}|        ${ENDCOLOR}[${BOLDBLUE}4${ENDCOLOR}] Clean Kernel (Clean & Mrproper)          ${BOLDGREEN}|${ENDCOLOR}"
-	echo -e "${BOLDGREEN}|        ${ENDCOLOR}[${BOLDBLUE}5${ENDCOLOR}] Apply Defconfig (Selection in Config)    ${BOLDGREEN}|${ENDCOLOR}"
-	echo -e "${BOLDGREEN}|        ${ENDCOLOR}[${BOLDBLUE}6${ENDCOLOR}] Apply Saved Config (Selection in Config) ${BOLDGREEN}|${ENDCOLOR}"
-	echo -e "${BOLDGREEN}|        ${ENDCOLOR}[${BOLDBLUE}7${ENDCOLOR}] Edit Config (MENUCONFIG)                 ${BOLDGREEN}|${ENDCOLOR}"
-	echo -e "${BOLDGREEN}|        ${ENDCOLOR}[${BOLDBLUE}8${ENDCOLOR}] Edit Config (NCONFIG)                    ${BOLDGREEN}|${ENDCOLOR}"
-	echo -e "${BOLDGREEN}|        ${ENDCOLOR}[${BOLDBLUE}9${ENDCOLOR}] Save .config as defconfig                ${BOLDGREEN}|${ENDCOLOR}"
-	echo -e "${BOLDGREEN}|       ${ENDCOLOR}[${BOLDBLUE}10${ENDCOLOR}] Save .config as config                   ${BOLDGREEN}|${ENDCOLOR}"
-	echo -e "${BOLDGREEN}|-------------------${ENDCOLOR}Script${BOLDGREEN}----------------------------|${ENDCOLOR}"
-	echo -e "${BOLDGREEN}|        ${ENDCOLOR}[${BOLDRED}E${ENDCOLOR}] Exit Builder                             ${BOLDGREEN}|${ENDCOLOR}"
-	echo -e "${BOLDGREEN}|        ${ENDCOLOR}[${BOLDBLUE}G${ENDCOLOR}] Open the creator's github page           ${BOLDGREEN}|${ENDCOLOR}"
-	echo -e "${BOLDGREEN}|-------------------${ENDCOLOR}End${BOLDGREEN}-------------------------------|${ENDCOLOR}"
+	echo -e "${BOLDGREEN}|-------------------${ENDCOLOR}Kernel${BOLDGREEN}----------------------------|$ENDCOLOR"
+	echo -e "${BOLDGREEN}|        ${ENDCOLOR}[${BOLDBLUE}1${ENDCOLOR}] Compile Kernel                           $BOLDGREEN|$ENDCOLOR"
+	echo -e "${BOLDGREEN}|        ${ENDCOLOR}[${BOLDBLUE}2${ENDCOLOR}] Compile Module (Doesn't need prepare)    $BOLDGREEN|$ENDCOLOR"
+	echo -e "${BOLDGREEN}|        ${ENDCOLOR}[${BOLDBLUE}3${ENDCOLOR}] Prepare Module                           $BOLDGREEN|$ENDCOLOR"
+	echo -e "${BOLDGREEN}|        ${ENDCOLOR}[${BOLDBLUE}4${ENDCOLOR}] Clean Kernel (Clean & Mrproper)          $BOLDGREEN|$ENDCOLOR"
+	echo -e "${BOLDGREEN}|        ${ENDCOLOR}[${BOLDBLUE}5${ENDCOLOR}] Apply Defconfig (Selection in Config)    $BOLDGREEN|$ENDCOLOR"
+	echo -e "${BOLDGREEN}|        ${ENDCOLOR}[${BOLDBLUE}6${ENDCOLOR}] Apply Saved Config (Selection in Config) $BOLDGREEN|$ENDCOLOR"
+	echo -e "${BOLDGREEN}|        ${ENDCOLOR}[${BOLDBLUE}7${ENDCOLOR}] Edit Config (MENUCONFIG)                 $BOLDGREEN|$ENDCOLOR"
+	echo -e "${BOLDGREEN}|        ${ENDCOLOR}[${BOLDBLUE}8${ENDCOLOR}] Edit Config (NCONFIG)                    $BOLDGREEN|$ENDCOLOR"
+	echo -e "${BOLDGREEN}|        ${ENDCOLOR}[${BOLDBLUE}9${ENDCOLOR}] Save .config as defconfig                $BOLDGREEN|$ENDCOLOR"
+	echo -e "${BOLDGREEN}|       ${ENDCOLOR}[${BOLDBLUE}10${ENDCOLOR}] Save .config as config                   $BOLDGREEN|$ENDCOLOR"
+	echo -e "${BOLDGREEN}|-------------------${ENDCOLOR}Script${BOLDGREEN}----------------------------|$ENDCOLOR"
+	echo -e "${BOLDGREEN}|        ${ENDCOLOR}[${BOLDRED}E${ENDCOLOR}] Exit Builder                             $BOLDGREEN|$ENDCOLOR"
+	echo -e "${BOLDGREEN}|        ${ENDCOLOR}[${BOLDBLUE}G${ENDCOLOR}] Open the creator's github page           $BOLDGREEN|$ENDCOLOR"
+	echo -e "${BOLDGREEN}|-------------------${ENDCOLOR}End${BOLDGREEN}-------------------------------|$ENDCOLOR"
 	echo
 }
 
 function check_exit_code() {
 	local ret=$?
 	if [ $ret -eq 0 ]; then
-		echo -e "${BOLDGREEN}[+] Success${ENDCOLOR}"
+		echo -e "$BOLDGREEN[+] Success$ENDCOLOR"
 	else
-		echo -e "${BOLDRED}[-] Failed (exit code: $ret)${ENDCOLOR}"
+		echo -e "$BOLDRED[-] Failed (exit code: $ret)$ENDCOLOR"
 	fi
 }
 
@@ -83,92 +83,111 @@ while true; do
 
 	case $action in
 		1)
-			echo -e "${BOLDGREEN}[+] Building${ENDCOLOR}"
+			echo -e "$BOLDGREEN[+] Building$ENDCOLOR"
 			if [ ! -f "$KDIR/$OUT_DIR/.config" ]; then
-				echo -e "${BOLDRED}[-] No .config found${ENDCOLOR}"
+				echo -e "$BOLDRED[-] No .config found$ENDCOLOR"
 			else
-				echo -e "${BOLDRED}[+] .config found${ENDCOLOR}"
+				echo -e "$BOLDRED[+] .config found$ENDCOLOR"
 				make -s -C "$KDIR" O="$OUT_DIR" KCFLAGS="$KCFLAGS" CONFIG_SECTION_MISMATCH_WARN_ONLY=y -j"$(nproc)"
 				check_exit_code
-				if [ ! -f "${OUT_DIR}/arch/${ARCH}/boot/Image" ]; then
-					echo -e "${BOLDRED}[-] Image binary isn't made${ENDCOLOR}"
+				if [ ! -f "$KDIR/$OUT_DIR/arch/$ARCH/boot/Image" ]; then
+					echo -e "$BOLDRED[-] Image binary isn't made$ENDCOLOR"
 				else
-					echo -e "${BOLDGREEN}[+] Image binary copied to '$KDIR/arch/${ARCH}/boot/Image'${ENDCOLOR}"
-					cp ${OUT_DIR}/arch/${ARCH}/boot/Image $KDIR/arch/${ARCH}/boot/Image
+					echo -e "$BOLDGREEN[+] Image binary copied to '$KDIR/arch/$ARCH/boot/Image'$ENDCOLOR"
+					cp "$KDIR/$OUT_DIR/arch/$ARCH/boot/Image" "$KDIR/arch/$ARCH/boot/Image"
 				fi
 			fi
 			;;
 		2)
-			echo -e "${BOLDGREEN}[+] Building Modules${ENDCOLOR}"
+			echo -e "$BOLDGREEN[+] Building Modules$ENDCOLOR"
 			if [ ! -f "$KDIR/$OUT_DIR/.config" ]; then
-				echo -e "${BOLDRED}[-] No .config found${ENDCOLOR}"
+				echo -e "$BOLDRED[-] No .config found$ENDCOLOR"
 			else
-				echo -e "${BOLDRED}[+] .config found${ENDCOLOR}"
+				echo -e "$BOLDRED[+] .config found$ENDCOLOR"
 				make -C "$KDIR" O="$OUT_DIR" KCFLAGS="$KCFLAGS" CONFIG_SECTION_MISMATCH_WARN_ONLY=y module_prepare -j"$(nproc)" && make -C "$KDIR" O="$OUT_DIR" KCFLAGS="$KCFLAGS" CONFIG_SECTION_MISMATCH_WARN_ONLY=y module -j"$(nproc)"
 				check_exit_code
 			fi
 			;;
 		2)
-			echo -e "${BOLDGREEN}[+] Preparing Modules${ENDCOLOR}"
+			echo -e "$BOLDGREEN[+] Preparing Modules$ENDCOLOR"
 			if [ ! -f "$KDIR/$OUT_DIR/.config" ]; then
-				echo -e "${BOLDRED}[-] No .config found${ENDCOLOR}"
+				echo -e "$BOLDRED[-] No .config found$ENDCOLOR"
 			else
-				echo -e "${BOLDRED}[+] .config found${ENDCOLOR}"
+				echo -e "$BOLDRED[+] .config found$ENDCOLOR"
 				make -C "$KDIR" O="$OUT_DIR" KCFLAGS="$KCFLAGS" CONFIG_SECTION_MISMATCH_WARN_ONLY=y module_prepare -j"$(nproc)"
 				check_exit_code
 			fi
 			;;
 		4)
-			echo -e "${BOLDGREEN}[+] Cleaning${ENDCOLOR}"
+			echo -e "$BOLDGREEN[+] Cleaning$ENDCOLOR"
 			make -s -C "$KDIR" O="$OUT_DIR" KCFLAGS="$KCFLAGS" CONFIG_SECTION_MISMATCH_WARN_ONLY=y clean -j"$(nproc)" && make -s -C "$KDIR" O="$OUT_DIR" KCFLAGS="$KCFLAGS" CONFIG_SECTION_MISMATCH_WARN_ONLY=y mrproper -j"$(nproc)"
 			check_exit_code
 			;;
 		5)
-			echo -e "${BOLDGREEN}[+] Appling ${DEFCONFIG}${ENDCOLOR}"
-			if [ ! -f "arch/${ARCH}/configs/${DEFCONFIG}" ]; then
-				echo -e "${BOLDRED}[-] ${DEFCONFIG} is not found${ENDCOLOR}"
+			echo -e "$BOLDGREEN[+] Appling $DEFCONFIG$ENDCOLOR"
+			if [ ! -f "arch/$ARCH/configs/$DEFCONFIG" ]; then
+				echo -e "$BOLDRED[-] $DEFCONFIG is not found$ENDCOLOR"
 				exit 1
 			else
-				echo -e "${BOLDGREEN}[+] ${DEFCONFIG} is found${ENDCOLOR}"
+				echo -e "$BOLDGREEN[+] $DEFCONFIG is found$ENDCOLOR"
 			fi
-			make -C "$KDIR" O="$OUT_DIR" KCFLAGS="$KCFLAGS" CONFIG_SECTION_MISMATCH_WARN_ONLY=y ${DEFCONFIG} -j"$(nproc)"
+			make -C "$KDIR" O="$OUT_DIR" KCFLAGS="$KCFLAGS" CONFIG_SECTION_MISMATCH_WARN_ONLY=y $DEFCONFIG -j"$(nproc)"
 			check_exit_code
 			;;
 		6)
-			echo -e "${BOLDGREEN}[+] Appling ${SAVEDCONFIG}${ENDCOLOR}"
-			if [ ! -f "arch/${ARCH}/configs/${SAVEDCONFIG}" ]; then
-				echo -e "${BOLDRED}[-] ${SAVEDCONFIG} is not found${ENDCOLOR}"
+			echo -e "$BOLDGREEN[+] Appling $SAVEDCONFIG$ENDCOLOR"
+			if [ ! -f "arch/$ARCH/configs/$SAVEDCONFIG" ]; then
+				echo -e "$BOLDRED[-] $SAVEDCONFIG is not found${ENDCOLOR}"
 				exit 1
 			else
-				echo -e "${BOLDGREEN}[+] ${SAVEDCONFIG} is found${ENDCOLOR}"
+				echo -e "$BOLDGREEN[+] $SAVEDCONFIG is found${ENDCOLOR}"
 			fi
-			make -C "$KDIR" O="$OUT_DIR" KCFLAGS="$KCFLAGS" CONFIG_SECTION_MISMATCH_WARN_ONLY=y ${SAVEDCONFIG} -j"$(nproc)"
+			make -C "$KDIR" O="$OUT_DIR" KCFLAGS="$KCFLAGS" CONFIG_SECTION_MISMATCH_WARN_ONLY=y $SAVEDCONFIG -j"$(nproc)"
 			check_exit_code
 			;;
 		7)
-			echo -e "${BOLDGREEN}[+] Editing Config (MENUCONFIG)${ENDCOLOR}"
+			echo -e "$BOLDGREEN[+] Editing Config (MENUCONFIG)$ENDCOLOR"
 			make -C "$KDIR" O="$OUT_DIR" KCFLAGS="$KCFLAGS" CONFIG_SECTION_MISMATCH_WARN_ONLY=y menuconfig -j"$(nproc)"
 			;;
 		8)
-			echo -e "${BOLDGREEN}[+] Editing Config (MENUCONFIG)${ENDCOLOR}"
+			echo -e "$BOLDGREEN[+] Editing Config (MENUCONFIG)$ENDCOLOR"
 			make -C "$KDIR" O="$OUT_DIR" KCFLAGS="$KCFLAGS" CONFIG_SECTION_MISMATCH_WARN_ONLY=y nconfig -j"$(nproc)"
 			;;
 		9)
-			echo -e "${BOLDGREEN}[+] Saving current .config as ${DEFCONFIG}${ENDCOLOR}"
+			echo -e "$BOLDGREEN[+] Saving current .config as $DEFCONFIG$ENDCOLOR"
+			if [ ! -f "$KDIR/arch/$ARCH/configs/$DEFCONFIG" ]; then
+				echo -e "$BOLDRED[!] There are a saved DEFCONFIG: $DEFCONFIG$ENDCOLOR"
+				read -e -p "${BOLDRED}Do you want to overwrite it? [Y,n]: $ENDCOLOR" overwrite
+				if [[ "$overwrite" == "y" || "$overwrite" == "Y" || "$overwrite" == "" ]]; then
+					cp "$KDIR/$OUT_DIR/.config" "$KDIR/arch/$ARCH/configs/$DEFCONFIG"
+					ret=$?
+					if [ $ret -eq 0 ]; then
+						echo -e "$BOLDGREEN[+] Saved Successfully$ENDCOLOR"
+					else
+						echo -e "$BOLDRED[-] Saving Failed (exit code: $ret)$ENDCOLOR"
+					fi
+				elif [[ "$overwrite" == "n" || "$overwrite" == "N" ]]; then
+					echo -e "$BOLDRED[!] Saving interrupted by user$ENDCOLOR"
+				else
+					echo -e "$BOLDRED[!] Invalid Action!!$ENDCOLOR"
+				fi
+			else
+				cp "$KDIR/$OUT_DIR/.config" "$KDIR/arch/$ARCH/configs/$DEFCONFIG"
+			fi
 			;;
 		10)
-			echo -e "${BOLDGREEN}[+] Saving current .config as ${SAVEDCONFIG}${ENDCOLOR}"
+			echo -e "$BOLDGREEN[+] Saving current .config as $SAVEDCONFIG$ENDCOLOR"
 			;;
 		E)
-			echo -e "${BOLDRED}[!] Exiting!!${ENDCOLOR}"
+			echo -e "$BOLDRED[!] Exiting!!$ENDCOLOR"
 			break
 			;;
 		G)
-			echo -e "${BOLDGREEN}[+] Opening the creator's github page${ENDCOLOR}"
+			echo -e "$BOLDGREEN[+] Opening the creator's github page$ENDCOLOR"
 			xdg-open https://github.com/karamdev1 > /dev/null 2>&1 &
 			;;
 		*)
-			echo -e "${BOLDRED}[!] Invalid Action!!${ENDCOLOR}"
+			echo -e "$BOLDRED[!] Invalid Action!!$ENDCOLOR"
 			;;
 	esac
 	read -p "Press Enter to continue..."
