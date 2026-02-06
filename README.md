@@ -5,10 +5,11 @@
 figlet (for the logo)
 ```
 
-## Installation (inside your kernel tree) (running it as user is recommended)
+## Setup (inside your kernel tree) (running it as user is recommended)
 ```
 git clone https://github.com/karamdev1/Kernel-Builder.git
 mv Kernel-Builder/build.sh ./
 mv Kernel-Builder/config ./
 rm -r Kernel-Builder
 ```
+Hook your toolchain, defconfig and arch type in **config** file and execute the build.sh
