@@ -139,7 +139,7 @@ while true; do
 				echo -e "$BOLDRED[-] $DEFCONFIG is not found$ENDCOLOR"
 			else
 				echo -e "$BOLDGREEN[+] $DEFCONFIG is found$ENDCOLOR"
-				echo -ne "$BOLDRED[!] Want to apply $BOLDYELLOW$DEFCONFIG$BOLDRED?$ENDCOLOR [Y,n]:"
+				echo -ne "$BOLDRED[!] Want to apply $BOLDYELLOW$DEFCONFIG$BOLDRED?$ENDCOLOR [Y,n]: "
 				read answer
 				if [[ "$answer" == "Y" || "$answer" == "y" || "$answer" == "" ]]; then
 					make -C "$KDIR" O="$OUT_DIR" KCFLAGS="$KCFLAGS" CONFIG_SECTION_MISMATCH_WARN_ONLY=y $DEFCONFIG -j"$(nproc)"
@@ -175,7 +175,7 @@ while true; do
 				read newconfig
 				if [ -f "$KDIR/arch/$ARCH/configs/$newconfig" ]; then
 					echo -e "$BOLDRED[!] $newconfig is found"
-					echo -ne "Do you want to overwrite it?$ENDCOLOR [y,N]"
+					echo -ne "Do you want to overwrite it?$ENDCOLOR [y,N]: "
 					read answer
 					if [[ "$answer" == "Y" || "$answer" == "y" ]]; then
 						echo -e "$BOLDGREEN[+] Overwriting current .config as $newconfig$ENDCOLOR"
