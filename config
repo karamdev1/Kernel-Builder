@@ -5,7 +5,7 @@
 # --- Architecture ---
 ARCH=arm64
 
-# --- Toolchain ---
+# --- Toolchain --- Root of folder of the toolchain here
 TD=~/toolchains/zyc-clang-14
 
 # --- Paths ---
