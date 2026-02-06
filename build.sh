@@ -91,7 +91,7 @@ while true; do
 			if [ ! -f "$KDIR/$OUT_DIR/.config" ]; then
 				echo -e "$BOLDRED[-] No .config found$ENDCOLOR"
 			else
-				echo -e "$BOLDRED[+] .config found$ENDCOLOR"
+				echo -e "$BOLDGREEN[+] .config found$ENDCOLOR"
 				make -s -C "$KDIR" O="$OUT_DIR" KCFLAGS="$KCFLAGS" CONFIG_SECTION_MISMATCH_WARN_ONLY=y -j"$(nproc)"
 				check_exit_code
 				if [ ! -f "$KDIR/$OUT_DIR/arch/$ARCH/boot/Image" ]; then
@@ -113,7 +113,7 @@ while true; do
 			if [ ! -f "$KDIR/$OUT_DIR/.config" ]; then
 				echo -e "$BOLDRED[-] No .config found$ENDCOLOR"
 			else
-				echo -e "$BOLDRED[+] .config found$ENDCOLOR"
+				echo -e "$BOLDGREEN[+] .config found$ENDCOLOR"
 				make -C "$KDIR" O="$OUT_DIR" KCFLAGS="$KCFLAGS" CONFIG_SECTION_MISMATCH_WARN_ONLY=y module_prepare -j"$(nproc)" && make -C "$KDIR" O="$OUT_DIR" KCFLAGS="$KCFLAGS" CONFIG_SECTION_MISMATCH_WARN_ONLY=y module -j"$(nproc)"
 				check_exit_code
 			fi
@@ -123,7 +123,7 @@ while true; do
 			if [ ! -f "$KDIR/$OUT_DIR/.config" ]; then
 				echo -e "$BOLDRED[-] No .config found$ENDCOLOR"
 			else
-				echo -e "$BOLDRED[+] .config found$ENDCOLOR"
+				echo -e "$BOLDGREEN[+] .config found$ENDCOLOR"
 				make -C "$KDIR" O="$OUT_DIR" KCFLAGS="$KCFLAGS" CONFIG_SECTION_MISMATCH_WARN_ONLY=y module_prepare -j"$(nproc)"
 				check_exit_code
 			fi
