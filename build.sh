@@ -48,22 +48,26 @@ function show_gui() {
 	echo -e "\e[1;93m"
 	figlet Kernel Builder
 	echo -e "\e[0m"
-	echo -e "${BOLDGREEN}Creator: ${BOLDRED}karamdev1$ENDCOLOR"
+	echo -e "${BOLDGREEN}By: ${BOLDYELLOW}Karam (karamdev1)$ENDCOLOR"
 	echo -e "${BOLDGREEN}Kernel Config: ${CONFIG_STATUS}$ENDCOLOR"
 	echo
-	echo -e "${BOLDGREEN}|-------------------${ENDCOLOR}Kernel${BOLDGREEN}----------------------------|$ENDCOLOR"
-	echo -e "${BOLDGREEN}|        ${ENDCOLOR}[${BOLDBLUE}1${ENDCOLOR}] Compile Kernel                           $BOLDGREEN|$ENDCOLOR"
-	echo -e "${BOLDGREEN}|        ${ENDCOLOR}[${BOLDBLUE}2${ENDCOLOR}] Compile Module $BOLDBLUE(Doesn't need prepare)    $BOLDGREEN|$ENDCOLOR"
-	echo -e "${BOLDGREEN}|        ${ENDCOLOR}[${BOLDBLUE}3${ENDCOLOR}] Prepare Module                           $BOLDGREEN|$ENDCOLOR"
-	echo -e "${BOLDGREEN}|        ${ENDCOLOR}[${BOLDBLUE}4${ENDCOLOR}] Clean Kernel $BOLDBLUE(Clean & Mrproper)          $BOLDGREEN|$ENDCOLOR"
-	echo -e "${BOLDGREEN}|        ${ENDCOLOR}[${BOLDBLUE}5${ENDCOLOR}] Apply Defconfig $BOLDBLUE(Selection in Config)    $BOLDGREEN|$ENDCOLOR"
-	echo -e "${BOLDGREEN}|        ${ENDCOLOR}[${BOLDBLUE}6${ENDCOLOR}] Edit Config $BOLDBLUE(MENUCONFIG) $BOLDYELLOW(GOOD)          $BOLDGREEN|$ENDCOLOR"
-	echo -e "${BOLDGREEN}|        ${ENDCOLOR}[${BOLDBLUE}7${ENDCOLOR}] Edit Config $BOLDBLUE(NCONFIG) $BOLDGREEN(BEST)             $BOLDGREEN|$ENDCOLOR"
-	echo -e "${BOLDGREEN}|        ${ENDCOLOR}[${BOLDBLUE}8${ENDCOLOR}] Save .config as new defconfig            $BOLDGREEN|$ENDCOLOR"
-	echo -e "${BOLDGREEN}|-------------------${ENDCOLOR}Script${BOLDGREEN}----------------------------|$ENDCOLOR"
-	echo -e "${BOLDGREEN}|        ${ENDCOLOR}[${BOLDRED}E${ENDCOLOR}] Exit Builder                             $BOLDGREEN|$ENDCOLOR"
-	echo -e "${BOLDGREEN}|        ${ENDCOLOR}[${BOLDBLUE}G${ENDCOLOR}] Open the creator's github page           $BOLDGREEN|$ENDCOLOR"
-	echo -e "${BOLDGREEN}|-------------------${ENDCOLOR}End${BOLDGREEN}-------------------------------|$ENDCOLOR"
+	echo -e "$BOLDGREEN|-----------------------------------------------------|$ENDCOLOR"
+	echo -e "${BOLDGREEN}| Actions:                                            |$ENDCOLOR"
+	echo -e "$BOLDGREEN|-------------------${ENDCOLOR}Kernel${BOLDGREEN}----------------------------|$ENDCOLOR"
+	echo -e "$BOLDGREEN|        ${ENDCOLOR}[${BOLDBLUE}1${ENDCOLOR}] Compile Kernel                           $BOLDGREEN|$ENDCOLOR"
+	echo -e "$BOLDGREEN|        ${ENDCOLOR}[${BOLDBLUE}2${ENDCOLOR}] Compile Module $BOLDBLUE(Doesn't need prepare)    $BOLDGREEN|$ENDCOLOR"
+	echo -e "$BOLDGREEN|        ${ENDCOLOR}[${BOLDBLUE}3${ENDCOLOR}] Prepare Module                           $BOLDGREEN|$ENDCOLOR"
+	echo -e "$BOLDGREEN|-----------------------------------------------------|$ENDCOLOR"
+	echo -e "$BOLDGREEN|        ${ENDCOLOR}[${BOLDBLUE}4${ENDCOLOR}] Clean Kernel $BOLDBLUE(Clean & Mrproper)          $BOLDGREEN|$ENDCOLOR"
+	echo -e "$BOLDGREEN|        ${ENDCOLOR}[${BOLDBLUE}5${ENDCOLOR}] Apply Defconfig $BOLDBLUE(Selection in Config)    $BOLDGREEN|$ENDCOLOR"
+	echo -e "$BOLDGREEN|-----------------------------------------------------|$ENDCOLOR"
+	echo -e "$BOLDGREEN|        ${ENDCOLOR}[${BOLDBLUE}6${ENDCOLOR}] Edit Config $BOLDBLUE(MENUCONFIG) $BOLDYELLOW(GOOD)          $BOLDGREEN|$ENDCOLOR"
+	echo -e "$BOLDGREEN|        ${ENDCOLOR}[${BOLDBLUE}7${ENDCOLOR}] Edit Config $BOLDBLUE(NCONFIG) $BOLDGREEN(BEST)             $BOLDGREEN|$ENDCOLOR"
+	echo -e "$BOLDGREEN|        ${ENDCOLOR}[${BOLDBLUE}8${ENDCOLOR}] Save .config as new defconfig            $BOLDGREEN|$ENDCOLOR"
+	echo -e "$BOLDGREEN|-------------------${ENDCOLOR}Script${BOLDGREEN}----------------------------|$ENDCOLOR"
+	echo -e "$BOLDGREEN|        ${ENDCOLOR}[${BOLDRED}E${ENDCOLOR}] Exit Builder                             $BOLDGREEN|$ENDCOLOR"
+	echo -e "$BOLDGREEN|        ${ENDCOLOR}[${BOLDBLUE}G${ENDCOLOR}] Open the creator's github page           $BOLDGREEN|$ENDCOLOR"
+	echo -e "$BOLDGREEN|-------------------${ENDCOLOR}End${BOLDGREEN}-------------------------------|$ENDCOLOR"
 	echo
 }
 
@@ -78,7 +82,8 @@ function check_exit_code() {
 
 while true; do
 	show_gui
-	read -p "Enter the action: " action
+	echo -ne "${BOLDGREEN}Enter the action: $ENDCOLOR"
+	read action
 
 	case $action in
 		1)
@@ -92,8 +97,14 @@ while true; do
 				if [ ! -f "$KDIR/$OUT_DIR/arch/$ARCH/boot/Image" ]; then
 					echo -e "$BOLDRED[-] Image binary isn't made$ENDCOLOR"
 				else
-					echo -e "$BOLDGREEN[+] Image binary copied to '$KDIR/arch/$ARCH/boot/Image'$ENDCOLOR"
+					echo -e "$BOLDGREEN[+] Image binary is being copied to '$KDIR/arch/$ARCH/boot/Image'$ENDCOLOR"
 					cp "$KDIR/$OUT_DIR/arch/$ARCH/boot/Image" "$KDIR/arch/$ARCH/boot/Image"
+					ret=$?
+					if [ $ret -eq 0 ]; then
+						echo -e "$BOLDGREEN[+] Coping succeed$ENDCOLOR"
+					else
+						echo -e "$BOLDRED[-] Coping Failed (exit code: $ret)$ENDCOLOR"
+					fi
 				fi
 			fi
 			;;
@@ -157,6 +168,36 @@ while true; do
 			;;
 		8)
 			echo -e "$BOLDGREEN[+] Saving current .config as new defconfig$ENDCOLOR"
+			if [ ! -f "$KDIR/$OUT_DIR/.config" ]; then
+				echo -e "$BOLDRED[!] .config is not found$ENDCOLOR"
+			else
+				echo -ne "$BOLDGREEN[!] Enter the new defconfig name: $ENDCOLOR"
+				read newconfig
+				if [ -f "$KDIR/arch/$ARCH/configs/$newconfig" ]; then
+					echo -e "$BOLDRED[!] $newconfig is found"
+					echo -ne "Do you want to overwrite it?$ENDCOLOR [y,N]"
+					read answer
+					if [[ "$answer" == "Y" || "$answer" == "y" ]]; then
+						echo -e "$BOLDGREEN[+] Overwriting current .config as $newconfig$ENDCOLOR"
+						cp "$KDIR/$OUT_DIR/.config" "$KDIR/arch/$ARCH/configs/$newconfig"
+						ret=$?
+						if [ $ret -eq 0 ]; then
+							echo -e "$BOLDGREEN[+] Coping succeed$ENDCOLOR"
+						else
+							echo -e "$BOLDRED[-] Coping Failed (exit code: $ret)$ENDCOLOR"
+						fi
+					fi
+				else
+					echo -e "$BOLDGREEN[+] Saving current .config as $newconfig$ENDCOLOR"
+					cp "$KDIR/$OUT_DIR/.config" "$KDIR/arch/$ARCH/configs/$newconfig"
+					ret=$?
+					if [ $ret -eq 0 ]; then
+						echo -e "$BOLDGREEN[+] Coping succeed$ENDCOLOR"
+					else
+						echo -e "$BOLDRED[-] Coping Failed (exit code: $ret)$ENDCOLOR"
+					fi
+				fi
+			fi
 			;;
 		E)
 			echo -e "$BOLDRED[!] Exiting!!$ENDCOLOR"
@@ -170,5 +211,6 @@ while true; do
 			echo -e "$BOLDRED[!] Invalid Action!!$ENDCOLOR"
 			;;
 	esac
-	read -p "Press Enter to continue..."
+	echo -ne "${BOLDYELLOW}Press enter to continue$ENDCOLOR"
+	read
 done
