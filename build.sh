@@ -1,9 +1,8 @@
 #!/bin/bash
 
 # Check figlet for gui
-FIGLET_STATUS=$(which figlet)
-if [ ! $FIGLET_STATUS]; then
-	sudo apt install figlet
+if ! command -v figlet >/dev/null 2>&1; then
+    sudo apt install -y figlet
 fi
 
 # Load config
@@ -14,6 +13,7 @@ fi
 
 source config
 
+# Compiling parameters and toolchain
 export ANDROID_MAJOR_VERSION=r
 ARCH=$(eval echo $ARCH)
 CC=$(eval echo $CC)
@@ -27,12 +27,23 @@ READELF=$(eval echo $READELF)
 CROSS_COMPILE=$(eval echo $CROSS_COMPILE)
 CROSS_COMPILE_ARM32=$(eval echo $CROSS_COMPILE_ARM32)
 KCFLAGS=' -w -pipe -O3'
+OUT_DIR=$(eval echo "$OUT_DIR")
+KDIR=$(pwd)
+DEFCONFIG=$(eval echo "$DEFCONFIG")
+SAVEDCONFIG=$(eval echo "$SAVEDCONFIG")
 
 # Colors
 BOLDGREEN="\e[1;32m"
 BOLDRED="\e[1;31m"
-BOLDCYAN="\e[1;36m"
+BOLDBLUE="\e[1;96m"
 ENDCOLOR="\e[0m"
+
+# Check if theres config
+if [ -f "$KDIR/$OUT_DIR/.config" ]; then
+    CONFIG_STATUS="${BOLDGREEN}Config present${ENDCOLOR}"
+else
+    CONFIG_STATUS="${BOLDRED}No .config found${ENDCOLOR}"
+fi
 
 function show_gui() {
 	clear
@@ -40,9 +51,20 @@ function show_gui() {
 	figlet Kernel Builder
 	echo -e "\e[0m"
 	echo -e "${BOLDGREEN}Creator: ${BOLDRED}karamdev1${ENDCOLOR}"
+	echo -e "${BOLDGREEN}Kernel Config: ${CONFIG_STATUS}${ENDCOLOR}"
 	echo
-	echo -e "${BOLDGREEN}|---------------${ENDCOLOR}Compile${BOLDGREEN}---------------|${ENDCOLOR}"
-	echo -e "${BOLDGREEN}|        ${ENDCOLOR}[${BOLDCYAN}1${ENDCOLOR}] Compile Kernel           ${BOLDGREEN}|${ENDCOLOR}"
+	echo -e "${BOLDGREEN}|-------------------${ENDCOLOR}Compile${BOLDGREEN}---------------------------|${ENDCOLOR}"
+	echo -e "${BOLDGREEN}|        ${ENDCOLOR}[${BOLDBLUE}1${ENDCOLOR}] Compile Kernel                           ${BOLDGREEN}|${ENDCOLOR}"
+	echo -e "${BOLDGREEN}|        ${ENDCOLOR}[${BOLDBLUE}2${ENDCOLOR}] Compile Module (Doesn't need prepare)    ${BOLDGREEN}|${ENDCOLOR}"
+	echo -e "${BOLDGREEN}|        ${ENDCOLOR}[${BOLDBLUE}3${ENDCOLOR}] Prepare Module                           ${BOLDGREEN}|${ENDCOLOR}"
+	echo -e "${BOLDGREEN}|-------------------${ENDCOLOR}Clean${BOLDGREEN}-----------------------------|${ENDCOLOR}"
+	echo -e "${BOLDGREEN}|        ${ENDCOLOR}[${BOLDBLUE}4${ENDCOLOR}] Clean Kernel                             ${BOLDGREEN}|${ENDCOLOR}"
+	echo -e "${BOLDGREEN}|        ${ENDCOLOR}[${BOLDBLUE}5${ENDCOLOR}] Apply Defconfig (Selection in Config)    ${BOLDGREEN}|${ENDCOLOR}"
+	echo -e "${BOLDGREEN}|        ${ENDCOLOR}[${BOLDBLUE}6${ENDCOLOR}] Apply Saved Config (Selection in Config) ${BOLDGREEN}|${ENDCOLOR}"
+	echo -e "${BOLDGREEN}|-------------------${ENDCOLOR}Script${BOLDGREEN}----------------------------|${ENDCOLOR}"
+	echo -e "${BOLDGREEN}|        ${ENDCOLOR}[${BOLDRED}E${ENDCOLOR}] Exit Builder                             ${BOLDGREEN}|${ENDCOLOR}"
+	echo -e "${BOLDGREEN}|-------------------${ENDCOLOR}End${BOLDGREEN}-------------------------------|${ENDCOLOR}"
+	echo
 }
 
 while true; do
