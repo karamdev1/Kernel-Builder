@@ -56,11 +56,9 @@ function show_gui() {
 	echo -e "${BOLDGREEN}|        ${ENDCOLOR}[${BOLDBLUE}3${ENDCOLOR}] Prepare Module                           $BOLDGREEN|$ENDCOLOR"
 	echo -e "${BOLDGREEN}|        ${ENDCOLOR}[${BOLDBLUE}4${ENDCOLOR}] Clean Kernel (Clean & Mrproper)          $BOLDGREEN|$ENDCOLOR"
 	echo -e "${BOLDGREEN}|        ${ENDCOLOR}[${BOLDBLUE}5${ENDCOLOR}] Apply Defconfig (Selection in Config)    $BOLDGREEN|$ENDCOLOR"
-	echo -e "${BOLDGREEN}|        ${ENDCOLOR}[${BOLDBLUE}6${ENDCOLOR}] Apply Saved Config (Selection in Config) $BOLDGREEN|$ENDCOLOR"
-	echo -e "${BOLDGREEN}|        ${ENDCOLOR}[${BOLDBLUE}7${ENDCOLOR}] Edit Config (MENUCONFIG)                 $BOLDGREEN|$ENDCOLOR"
-	echo -e "${BOLDGREEN}|        ${ENDCOLOR}[${BOLDBLUE}8${ENDCOLOR}] Edit Config (NCONFIG)                    $BOLDGREEN|$ENDCOLOR"
-	echo -e "${BOLDGREEN}|        ${ENDCOLOR}[${BOLDBLUE}9${ENDCOLOR}] Save .config as defconfig                $BOLDGREEN|$ENDCOLOR"
-	echo -e "${BOLDGREEN}|       ${ENDCOLOR}[${BOLDBLUE}10${ENDCOLOR}] Save .config as config                   $BOLDGREEN|$ENDCOLOR"
+	echo -e "${BOLDGREEN}|        ${ENDCOLOR}[${BOLDBLUE}6${ENDCOLOR}] Edit Config (MENUCONFIG)                 $BOLDGREEN|$ENDCOLOR"
+	echo -e "${BOLDGREEN}|        ${ENDCOLOR}[${BOLDBLUE}7${ENDCOLOR}] Edit Config (NCONFIG)                    $BOLDGREEN|$ENDCOLOR"
+	echo -e "${BOLDGREEN}|        ${ENDCOLOR}[${BOLDBLUE}8${ENDCOLOR}] Save .config as defconfig                $BOLDGREEN|$ENDCOLOR"
 	echo -e "${BOLDGREEN}|-------------------${ENDCOLOR}Script${BOLDGREEN}----------------------------|$ENDCOLOR"
 	echo -e "${BOLDGREEN}|        ${ENDCOLOR}[${BOLDRED}E${ENDCOLOR}] Exit Builder                             $BOLDGREEN|$ENDCOLOR"
 	echo -e "${BOLDGREEN}|        ${ENDCOLOR}[${BOLDBLUE}G${ENDCOLOR}] Open the creator's github page           $BOLDGREEN|$ENDCOLOR"
@@ -135,25 +133,14 @@ while true; do
 			check_exit_code
 			;;
 		6)
-			echo -e "$BOLDGREEN[+] Appling $SAVEDCONFIG$ENDCOLOR"
-			if [ ! -f "arch/$ARCH/configs/$SAVEDCONFIG" ]; then
-				echo -e "$BOLDRED[-] $SAVEDCONFIG is not found${ENDCOLOR}"
-				exit 1
-			else
-				echo -e "$BOLDGREEN[+] $SAVEDCONFIG is found${ENDCOLOR}"
-			fi
-			make -C "$KDIR" O="$OUT_DIR" KCFLAGS="$KCFLAGS" CONFIG_SECTION_MISMATCH_WARN_ONLY=y $SAVEDCONFIG -j"$(nproc)"
-			check_exit_code
-			;;
-		7)
 			echo -e "$BOLDGREEN[+] Editing Config (MENUCONFIG)$ENDCOLOR"
 			make -C "$KDIR" O="$OUT_DIR" KCFLAGS="$KCFLAGS" CONFIG_SECTION_MISMATCH_WARN_ONLY=y menuconfig -j"$(nproc)"
 			;;
-		8)
+		7)
 			echo -e "$BOLDGREEN[+] Editing Config (MENUCONFIG)$ENDCOLOR"
 			make -C "$KDIR" O="$OUT_DIR" KCFLAGS="$KCFLAGS" CONFIG_SECTION_MISMATCH_WARN_ONLY=y nconfig -j"$(nproc)"
 			;;
-		9)
+		8)
 			echo -e "$BOLDGREEN[+] Saving current .config as $DEFCONFIG$ENDCOLOR"
 			if [ ! -f "$KDIR/arch/$ARCH/configs/$DEFCONFIG" ]; then
 				echo -e "$BOLDRED[!] There are a saved DEFCONFIG: $DEFCONFIG$ENDCOLOR"
@@ -173,10 +160,13 @@ while true; do
 				fi
 			else
 				cp "$KDIR/$OUT_DIR/.config" "$KDIR/arch/$ARCH/configs/$DEFCONFIG"
+				ret=$?
+				if [ $ret -eq 0 ]; then
+					echo -e "$BOLDGREEN[+] Saved Successfully$ENDCOLOR"
+				else
+					echo -e "$BOLDRED[-] Saving Failed (exit code: $ret)$ENDCOLOR"
+				fi
 			fi
-			;;
-		10)
-			echo -e "$BOLDGREEN[+] Saving current .config as $SAVEDCONFIG$ENDCOLOR"
 			;;
 		E)
 			echo -e "$BOLDRED[!] Exiting!!$ENDCOLOR"

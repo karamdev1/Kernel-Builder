@@ -30,4 +30,3 @@ OUT_DIR=out
 
 # --- Config ---
 DEFCONFIG=a32_defconfig
-SAVEDCONFIG=a32_config
