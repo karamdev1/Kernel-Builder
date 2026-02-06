@@ -124,14 +124,28 @@ while true; do
 			;;
 		5)
 			echo -e "$BOLDGREEN[+] Appling $DEFCONFIG$ENDCOLOR"
-			if [ ! -f "arch/$ARCH/configs/$DEFCONFIG" ]; then
+			if [ ! -f "$KDIR/arch/$ARCH/configs/$DEFCONFIG" ]; then
 				echo -e "$BOLDRED[-] $DEFCONFIG is not found$ENDCOLOR"
-				exit 1
 			else
 				echo -e "$BOLDGREEN[+] $DEFCONFIG is found$ENDCOLOR"
+				echo -ne "$BOLDRED[!] Want to apply $BOLDYELLOW$DEFCONFIG$BOLDRED?$ENDCOLOR [Y,n]:"
+				read answer
+				if [[ "$answer" == "Y" || "$answer" == "y" || "$answer" == "" ]]; then
+					make -C "$KDIR" O="$OUT_DIR" KCFLAGS="$KCFLAGS" CONFIG_SECTION_MISMATCH_WARN_ONLY=y $DEFCONFIG -j"$(nproc)"
+					check_exit_code
+				elif [[ "$answer" == "N" || "$answer" == "n" ]]; then
+					echo -ne "$BOLDGREEN[+] Enter the defconfig's name: $ENDCOLOR"
+					read config
+					if [ ! -f "$KDIR/arch/$ARCH/configs/$config" ]; then
+						echo -e "$BOLDRED[-] $config is not found$ENDCOLOR"
+					else
+						make -C "$KDIR" O="$OUT_DIR" KCFLAGS="$KCFLAGS" CONFIG_SECTION_MISMATCH_WARN_ONLY=y $config -j"$(nproc)"
+						check_exit_code
+					fi
+				else
+					echo -e "$BOLDRED[!] Invalid Action!!$ENDCOLOR"
+				fi
 			fi
-			make -C "$KDIR" O="$OUT_DIR" KCFLAGS="$KCFLAGS" CONFIG_SECTION_MISMATCH_WARN_ONLY=y $DEFCONFIG -j"$(nproc)"
-			check_exit_code
 			;;
 		6)
 			echo -e "$BOLDGREEN[+] Editing Config (MENUCONFIG)$ENDCOLOR"
