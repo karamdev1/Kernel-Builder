@@ -4,12 +4,12 @@ if ! command -v figlet >/dev/null 2>&1; then
     sudo apt install -y figlet
 fi
 
-if [ ! -f config ]; then
-    echo "\e[1;31m[-] config file not found\e[0m"
+if [ ! -f building_config ]; then
+    echo "\e[1;31m[-] building_config file not found\e[0m"
     exit 1
 fi
 
-source config
+source building_config
 
 export ARCH=$(eval echo $ARCH)
 export CC=$(eval echo $CC)

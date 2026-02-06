@@ -9,7 +9,7 @@ figlet (for the logo)
 ```
 git clone https://github.com/karamdev1/Kernel-Builder.git
 mv Kernel-Builder/build.sh ./
-mv Kernel-Builder/config ./
+mv Kernel-Builder/building_config ./
 rm -r Kernel-Builder
 ```
-Hook your toolchain, defconfig and arch type in **config** file and execute the build.sh
+Hook your toolchain, defconfig and arch type in **building_config** file and execute the build.sh
