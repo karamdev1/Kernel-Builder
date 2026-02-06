@@ -34,6 +34,7 @@ export CONFIG_SECTION_MISMATCH_WARN_ONLY=y
 BOLDGREEN="\e[1;32m"
 BOLDRED="\e[1;31m"
 BOLDBLUE="\e[1;96m"
+BOLDYELLOW="\e[1;33m"
 ENDCOLOR="\e[0m"
 
 if [ -f "$KDIR/$OUT_DIR/.config" ]; then
@@ -52,13 +53,13 @@ function show_gui() {
 	echo
 	echo -e "${BOLDGREEN}|-------------------${ENDCOLOR}Kernel${BOLDGREEN}----------------------------|$ENDCOLOR"
 	echo -e "${BOLDGREEN}|        ${ENDCOLOR}[${BOLDBLUE}1${ENDCOLOR}] Compile Kernel                           $BOLDGREEN|$ENDCOLOR"
-	echo -e "${BOLDGREEN}|        ${ENDCOLOR}[${BOLDBLUE}2${ENDCOLOR}] Compile Module (Doesn't need prepare)    $BOLDGREEN|$ENDCOLOR"
+	echo -e "${BOLDGREEN}|        ${ENDCOLOR}[${BOLDBLUE}2${ENDCOLOR}] Compile Module $BOLDBLUE(Doesn't need prepare)    $BOLDGREEN|$ENDCOLOR"
 	echo -e "${BOLDGREEN}|        ${ENDCOLOR}[${BOLDBLUE}3${ENDCOLOR}] Prepare Module                           $BOLDGREEN|$ENDCOLOR"
-	echo -e "${BOLDGREEN}|        ${ENDCOLOR}[${BOLDBLUE}4${ENDCOLOR}] Clean Kernel (Clean & Mrproper)          $BOLDGREEN|$ENDCOLOR"
-	echo -e "${BOLDGREEN}|        ${ENDCOLOR}[${BOLDBLUE}5${ENDCOLOR}] Apply Defconfig (Selection in Config)    $BOLDGREEN|$ENDCOLOR"
-	echo -e "${BOLDGREEN}|        ${ENDCOLOR}[${BOLDBLUE}6${ENDCOLOR}] Edit Config (MENUCONFIG)                 $BOLDGREEN|$ENDCOLOR"
-	echo -e "${BOLDGREEN}|        ${ENDCOLOR}[${BOLDBLUE}7${ENDCOLOR}] Edit Config (NCONFIG)                    $BOLDGREEN|$ENDCOLOR"
-	echo -e "${BOLDGREEN}|        ${ENDCOLOR}[${BOLDBLUE}8${ENDCOLOR}] Save .config as defconfig                $BOLDGREEN|$ENDCOLOR"
+	echo -e "${BOLDGREEN}|        ${ENDCOLOR}[${BOLDBLUE}4${ENDCOLOR}] Clean Kernel $BOLDBLUE(Clean & Mrproper)          $BOLDGREEN|$ENDCOLOR"
+	echo -e "${BOLDGREEN}|        ${ENDCOLOR}[${BOLDBLUE}5${ENDCOLOR}] Apply Defconfig $BOLDBLUE(Selection in Config)    $BOLDGREEN|$ENDCOLOR"
+	echo -e "${BOLDGREEN}|        ${ENDCOLOR}[${BOLDBLUE}6${ENDCOLOR}] Edit Config $BOLDBLUE(MENUCONFIG) $BOLDYELLOW(GOOD)          $BOLDGREEN|$ENDCOLOR"
+	echo -e "${BOLDGREEN}|        ${ENDCOLOR}[${BOLDBLUE}7${ENDCOLOR}] Edit Config $BOLDBLUE(NCONFIG) $BOLDGREEN(BEST)             $BOLDGREEN|$ENDCOLOR"
+	echo -e "${BOLDGREEN}|        ${ENDCOLOR}[${BOLDBLUE}8${ENDCOLOR}] Save .config as new defconfig            $BOLDGREEN|$ENDCOLOR"
 	echo -e "${BOLDGREEN}|-------------------${ENDCOLOR}Script${BOLDGREEN}----------------------------|$ENDCOLOR"
 	echo -e "${BOLDGREEN}|        ${ENDCOLOR}[${BOLDRED}E${ENDCOLOR}] Exit Builder                             $BOLDGREEN|$ENDCOLOR"
 	echo -e "${BOLDGREEN}|        ${ENDCOLOR}[${BOLDBLUE}G${ENDCOLOR}] Open the creator's github page           $BOLDGREEN|$ENDCOLOR"
@@ -137,36 +138,11 @@ while true; do
 			make -C "$KDIR" O="$OUT_DIR" KCFLAGS="$KCFLAGS" CONFIG_SECTION_MISMATCH_WARN_ONLY=y menuconfig -j"$(nproc)"
 			;;
 		7)
-			echo -e "$BOLDGREEN[+] Editing Config (MENUCONFIG)$ENDCOLOR"
+			echo -e "$BOLDGREEN[+] Editing Config (NCONFIG)$ENDCOLOR"
 			make -C "$KDIR" O="$OUT_DIR" KCFLAGS="$KCFLAGS" CONFIG_SECTION_MISMATCH_WARN_ONLY=y nconfig -j"$(nproc)"
 			;;
 		8)
-			echo -e "$BOLDGREEN[+] Saving current .config as $DEFCONFIG$ENDCOLOR"
-			if [ ! -f "$KDIR/arch/$ARCH/configs/$DEFCONFIG" ]; then
-				echo -e "$BOLDRED[!] There are a saved DEFCONFIG: $DEFCONFIG$ENDCOLOR"
-				read -e -p "${BOLDRED}Do you want to overwrite it? [Y,n]: $ENDCOLOR" overwrite
-				if [[ "$overwrite" == "y" || "$overwrite" == "Y" || "$overwrite" == "" ]]; then
-					cp "$KDIR/$OUT_DIR/.config" "$KDIR/arch/$ARCH/configs/$DEFCONFIG"
-					ret=$?
-					if [ $ret -eq 0 ]; then
-						echo -e "$BOLDGREEN[+] Saved Successfully$ENDCOLOR"
-					else
-						echo -e "$BOLDRED[-] Saving Failed (exit code: $ret)$ENDCOLOR"
-					fi
-				elif [[ "$overwrite" == "n" || "$overwrite" == "N" ]]; then
-					echo -e "$BOLDRED[!] Saving interrupted by user$ENDCOLOR"
-				else
-					echo -e "$BOLDRED[!] Invalid Action!!$ENDCOLOR"
-				fi
-			else
-				cp "$KDIR/$OUT_DIR/.config" "$KDIR/arch/$ARCH/configs/$DEFCONFIG"
-				ret=$?
-				if [ $ret -eq 0 ]; then
-					echo -e "$BOLDGREEN[+] Saved Successfully$ENDCOLOR"
-				else
-					echo -e "$BOLDRED[-] Saving Failed (exit code: $ret)$ENDCOLOR"
-				fi
-			fi
+			echo -e "$BOLDGREEN[+] Saving current .config as new defconfig$ENDCOLOR"
 			;;
 		E)
 			echo -e "$BOLDRED[!] Exiting!!$ENDCOLOR"
