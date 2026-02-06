@@ -38,7 +38,7 @@ BOLDYELLOW="\e[1;33m"
 ENDCOLOR="\e[0m"
 
 if [ -f "$KDIR/$OUT_DIR/.config" ]; then
-    CONFIG_STATUS="$BOLDGREEN}Config present$ENDCOLOR"
+    CONFIG_STATUS="${BOLDGREEN}Config present$ENDCOLOR"
 else
     CONFIG_STATUS="${BOLDRED}No .config found$ENDCOLOR"
 fi
