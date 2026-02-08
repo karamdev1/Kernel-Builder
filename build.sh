@@ -4,12 +4,12 @@ if ! command -v figlet >/dev/null 2>&1; then
     sudo apt install -y figlet
 fi
 
-if [ ! -f building_config ]; then
-    echo "\e[1;31m[-] building_config file not found\e[0m"
+if [ ! -f config ]; then
+    echo "\e[1;31m[-] config file not found\e[0m"
     exit 1
 fi
 
-source building_config
+source config
 
 export ARCH=$(eval echo $ARCH)
 export CC=$(eval echo $CC)
@@ -37,13 +37,12 @@ BOLDBLUE="\e[1;96m"
 BOLDYELLOW="\e[1;33m"
 ENDCOLOR="\e[0m"
 
-if [ -f "$KDIR/$OUT_DIR/.config" ]; then
-    CONFIG_STATUS="${BOLDGREEN}Config present$ENDCOLOR"
-else
-    CONFIG_STATUS="${BOLDRED}No .config found$ENDCOLOR"
-fi
-
 function show_gui() {
+	if [ -f "$KDIR/$OUT_DIR/.config" ]; then
+		CONFIG_STATUS="${BOLDGREEN}Config present$ENDCOLOR"
+	else
+		CONFIG_STATUS="${BOLDRED}No .config found$ENDCOLOR"
+	fi
 	clear
 	echo -e "\e[1;93m"
 	figlet Kernel Builder
