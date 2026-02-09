@@ -91,7 +91,7 @@ while true; do
 				echo -e "$BOLDRED[-] No .config found$ENDCOLOR"
 			else
 				echo -e "$BOLDGREEN[+] .config found$ENDCOLOR"
-				make -s -C "$KDIR" O="$OUT_DIR" KCFLAGS="$KCFLAGS" CONFIG_SECTION_MISMATCH_WARN_ONLY=y -j"$(nproc)"
+				make -s -C "$KDIR" O="$OUT_DIR" KCFLAGS="$KCFLAGS" CONFIG_SECTION_MISMATCH_WARN_ONLY=y -j"$(nproc)" && make -C "$KDIR" O="$OUT_DIR" INSTALL_MOD_PATH="$OUT_DIR/modules" KCFLAGS="$KCFLAGS" CONFIG_SECTION_MISMATCH_WARN_ONLY=y modules_install -j"$(nproc)"
 				check_exit_code
 				if [ ! -f "$KDIR/$OUT_DIR/arch/$ARCH/boot/Image" ]; then
 					echo -e "$BOLDRED[-] Image binary isn't made$ENDCOLOR"
@@ -113,7 +113,7 @@ while true; do
 				echo -e "$BOLDRED[-] No .config found$ENDCOLOR"
 			else
 				echo -e "$BOLDGREEN[+] .config found$ENDCOLOR"
-				make -C "$KDIR" O="$OUT_DIR" KCFLAGS="$KCFLAGS" CONFIG_SECTION_MISMATCH_WARN_ONLY=y module_prepare -j"$(nproc)" && make -C "$KDIR" O="$OUT_DIR" KCFLAGS="$KCFLAGS" CONFIG_SECTION_MISMATCH_WARN_ONLY=y module -j"$(nproc)"
+				make -C "$KDIR" O="$OUT_DIR" KCFLAGS="$KCFLAGS" CONFIG_SECTION_MISMATCH_WARN_ONLY=y module_prepare -j"$(nproc)" && make -C "$KDIR" O="$OUT_DIR" KCFLAGS="$KCFLAGS" CONFIG_SECTION_MISMATCH_WARN_ONLY=y module -j"$(nproc)" && make -C "$KDIR" O="$OUT_DIR" INSTALL_MOD_PATH="$OUT_DIR/modules" KCFLAGS="$KCFLAGS" CONFIG_SECTION_MISMATCH_WARN_ONLY=y modules_install -j"$(nproc)"
 				check_exit_code
 			fi
 			;;
