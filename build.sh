@@ -25,7 +25,6 @@ export CROSS_COMPILE_ARM32=$(eval echo $CROSS_COMPILE_ARM32)
 OUT_DIR=$(eval echo $OUT_DIR)
 KDIR=$(pwd)
 DEFCONFIG=$(eval echo $DEFCONFIG)
-SAVEDCONFIG=$(eval echo $SAVEDCONFIG)
 export KCFLAGS=' -w -pipe -O3'
 export ANDROID_MAJOR_VERSION=r
 export KCPPFLAGS=' -O3'
@@ -91,7 +90,7 @@ while true; do
 				echo -e "$BOLDRED[-] No .config found$ENDCOLOR"
 			else
 				echo -e "$BOLDGREEN[+] .config found$ENDCOLOR"
-				make -s -C "$KDIR" O="$OUT_DIR" KCFLAGS="$KCFLAGS" CONFIG_SECTION_MISMATCH_WARN_ONLY=y -j"$(nproc)" && make -C "$KDIR" O="$OUT_DIR" INSTALL_MOD_PATH="$OUT_DIR/modules" KCFLAGS="$KCFLAGS" CONFIG_SECTION_MISMATCH_WARN_ONLY=y modules_install -j"$(nproc)"
+				make -s -C "$KDIR" O="$OUT_DIR" KCFLAGS="$KCFLAGS" CONFIG_SECTION_MISMATCH_WARN_ONLY=y -j"$(nproc)" && make -C "$KDIR" O="$OUT_DIR" INSTALL_MOD_PATH="modules" KCFLAGS="$KCFLAGS" CONFIG_SECTION_MISMATCH_WARN_ONLY=y modules_install -j"$(nproc)"
 				check_exit_code
 				echo -e "$BOLDGREEN[+] You can find the modules in '$OUT_DIR/modules'$ENDCOLOR"
 				if [ ! -f "$KDIR/$OUT_DIR/arch/$ARCH/boot/Image" ]; then
@@ -114,7 +113,7 @@ while true; do
 				echo -e "$BOLDRED[-] No .config found$ENDCOLOR"
 			else
 				echo -e "$BOLDGREEN[+] .config found$ENDCOLOR"
-				make -C "$KDIR" O="$OUT_DIR" KCFLAGS="$KCFLAGS" CONFIG_SECTION_MISMATCH_WARN_ONLY=y module_prepare -j"$(nproc)" && make -C "$KDIR" O="$OUT_DIR" KCFLAGS="$KCFLAGS" CONFIG_SECTION_MISMATCH_WARN_ONLY=y module -j"$(nproc)" && make -C "$KDIR" O="$OUT_DIR" INSTALL_MOD_PATH="$OUT_DIR/modules" KCFLAGS="$KCFLAGS" CONFIG_SECTION_MISMATCH_WARN_ONLY=y modules_install -j"$(nproc)"
+				make -C "$KDIR" O="$OUT_DIR" KCFLAGS="$KCFLAGS" CONFIG_SECTION_MISMATCH_WARN_ONLY=y module_prepare -j"$(nproc)" && make -C "$KDIR" O="$OUT_DIR" KCFLAGS="$KCFLAGS" CONFIG_SECTION_MISMATCH_WARN_ONLY=y module -j"$(nproc)" && make -C "$KDIR" O="$OUT_DIR" INSTALL_MOD_PATH="modules" KCFLAGS="$KCFLAGS" CONFIG_SECTION_MISMATCH_WARN_ONLY=y modules_install -j"$(nproc)"
 				check_exit_code
 				echo -e "$BOLDGREEN[+] You can find the modules in '$OUT_DIR/modules'$ENDCOLOR"
 			fi
