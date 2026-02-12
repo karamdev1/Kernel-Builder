@@ -98,7 +98,7 @@ while true; do
 				echo -e "$BOLDRED[-] No .config found$ENDCOLOR"
 			else
 				echo -e "$BOLDGREEN[+] .config found$ENDCOLOR"
-				make -C "$KDIR" O="$OUT_DIR" KCFLAGS="$KCFLAGS" CONFIG_SECTION_MISMATCH_WARN_ONLY=y module_prepare -j"$(nproc)" && make -C "$KDIR" O="$OUT_DIR" KCFLAGS="$KCFLAGS" CONFIG_SECTION_MISMATCH_WARN_ONLY=y module -j"$(nproc)" && make -C "$KDIR" O="$OUT_DIR" INSTALL_MOD_PATH="modules" KCFLAGS="$KCFLAGS" CONFIG_SECTION_MISMATCH_WARN_ONLY=y modules_install -j"$(nproc)"
+				make -C "$KDIR" O="$OUT_DIR" KCFLAGS="$KCFLAGS" CONFIG_SECTION_MISMATCH_WARN_ONLY=y modules_prepare -j"$(nproc)" && make -C "$KDIR" O="$OUT_DIR" KCFLAGS="$KCFLAGS" CONFIG_SECTION_MISMATCH_WARN_ONLY=y modules -j"$(nproc)" && make -C "$KDIR" O="$OUT_DIR" INSTALL_MOD_PATH="modules" KCFLAGS="$KCFLAGS" CONFIG_SECTION_MISMATCH_WARN_ONLY=y modules_install -j"$(nproc)"
 				ret=$?
 				if [ $ret -eq 0 ]; then
 					echo -e "$BOLDGREEN[+] Modules Building Succeed$ENDCOLOR"
@@ -108,13 +108,13 @@ while true; do
 				fi
 			fi
 			;;
-		2)
+		3)
 			echo -e "$BOLDGREEN[+] Preparing Modules$ENDCOLOR"
 			if [ ! -f "$KDIR/$OUT_DIR/.config" ]; then
 				echo -e "$BOLDRED[-] No .config found$ENDCOLOR"
 			else
 				echo -e "$BOLDGREEN[+] .config found$ENDCOLOR"
-				make -C "$KDIR" O="$OUT_DIR" KCFLAGS="$KCFLAGS" CONFIG_SECTION_MISMATCH_WARN_ONLY=y module_prepare -j"$(nproc)"
+				make -C "$KDIR" O="$OUT_DIR" KCFLAGS="$KCFLAGS" CONFIG_SECTION_MISMATCH_WARN_ONLY=y modules_prepare -j"$(nproc)"
 				ret=$?
 				if [ $ret -eq 0 ]; then
 					echo -e "$BOLDGREEN[+] Preparing Modules Succeed$ENDCOLOR"
