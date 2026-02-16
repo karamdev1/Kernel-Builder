@@ -15,11 +15,9 @@ TYPE=$(eval echo $Type)
 BIN_PATH=$(eval echo $BIN_PATH)
 export PATH="$BIN_PATH:$PATH"
 export ARCH=$(eval echo $ARCH)
-if [ $TYPE -eq "clang" ]; then
-	export CC=$(eval echo $CC)
-	export CROSS_COMPILE_ARM32=$(eval echo $CROSS_COMPILE_ARM32)
-fi
+export CC=$(eval echo $CC)
 export CROSS_COMPILE=$(eval echo $CROSS_COMPILE)
+export CROSS_COMPILE_ARM32=$(eval echo $CROSS_COMPILE_ARM32)
 OUT_DIR=$(eval echo $OUT_DIR)
 KDIR=$(pwd)
 DEFCONFIG=$(eval echo $DEFCONFIG)

@@ -6,12 +6,11 @@
 ARCH=arm64
 
 # --- Toolchain --- Root of folder of the toolchain here
-Type=clang # clang or gcc, must be small
 TD=~/toolchains/zyc-clang-14
 
 # --- Paths ---
 BIN_PATH=${TD}/bin
-CC=${BIN_PATH}/clang # leave empty for gcc
+CC=${BIN_PATH}/clang
 CROSS_COMPILE=${BIN_PATH}/aarch64-linux-gnu-
 CROSS_COMPILE_ARM32=${BIN_PATH}/arm-linux-gnueabi- # useless for gcc
 
