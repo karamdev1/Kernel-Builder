@@ -11,19 +11,15 @@ fi
 
 source config
 
-CLANG_PATH=$(eval echo $CLANG_PATH)
-export PATH="$CLANG_PATH:$PATH"
+TYPE=$(eval echo $Type)
+BIN_PATH=$(eval echo $BIN_PATH)
+export PATH="$BIN_PATH:$PATH"
 export ARCH=$(eval echo $ARCH)
-export CC=$(eval echo $CC)
-export LD=$(eval echo $LD)
-export OBJCOPY=$(eval echo $OBJCOPY)
-export AS=$(eval echo $AS)
-export NM=$(eval echo $NM)
-export STRIP=$(eval echo $STRIP)
-export OBJDUMP=$(eval echo $OBJDUMP)
-export READELF=$(eval echo $READELF)
+if [ $TYPE -eq "clang" ]; then
+	export CC=$(eval echo $CC)
+	export CROSS_COMPILE_ARM32=$(eval echo $CROSS_COMPILE_ARM32)
+fi
 export CROSS_COMPILE=$(eval echo $CROSS_COMPILE)
-export CROSS_COMPILE_ARM32=$(eval echo $CROSS_COMPILE_ARM32)
 OUT_DIR=$(eval echo $OUT_DIR)
 KDIR=$(pwd)
 DEFCONFIG=$(eval echo $DEFCONFIG)
